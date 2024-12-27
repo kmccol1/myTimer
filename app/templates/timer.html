@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+    <form action="/start" method="POST">
+        <label for="duration">Select Timer Length:</label>
+        <select name="duration" id="duration" required>
+            <option value="60">1 minute</option>
+            <option value="300">5 minutes</option>
+            <option value="600">10 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="1800">30 minutes</option>
+            <option value="3600">1 hour</option>
+            <option value="7200">2 hours</option>
+            <option value="10800">3 hours</option>
+            <option value="14400">4 hours</option>
+            <option value="21600">6 hours</option>
+        </select>
+        <button type="submit">Start Timer</button>
+    </form>
+    <ul>
+        {% for timer in timers %}
+            <li>
+                Timer #{{ timer.id }} ({{ timer.duration }} seconds)
+                {% if timer.end_time %}
+                    - Duration: {{ timer.duration }} seconds
+                {% else %}
+                    <span id="timer-{{ timer.id }}" data-duration="{{ timer.duration }}">
+                        00:00:00
+                    </span>
+                    <form action="/stop/{{ timer.id }}" method="POST">
+                        <button type="submit">Stop</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Include JavaScript -->
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+{% endblock %}
