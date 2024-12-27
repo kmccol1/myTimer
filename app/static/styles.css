@@ -100,3 +100,38 @@ button:hover {
 .text-center {
     text-align: center;
 }
+
+/* Center and make the main timer display large */
+.timer-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.main-timer {
+    font-size: 80px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.timer-controls {
+    margin-bottom: 20px;
+}
+
+.timer-controls button {
+    font-size: 20px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.timer-duration-selection {
+    margin-top: 30px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}

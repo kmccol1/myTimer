@@ -1,46 +1,49 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("JavaScript loaded");
+    let currentTimerInterval = null;
+    let elapsedTime = 0; // Track elapsed time in milliseconds
+    let timerDuration = 0; // Timer's total duration in milliseconds
+    const timerElement = document.getElementById('current-timer');
+    const startButton = document.getElementById('start-btn');
+    const stopButton = document.getElementById('stop-btn');
 
-    // Select all timer elements
-    const timers = document.querySelectorAll('[id^="timer-"]');
+    function updateTimer() {
+        // Format elapsed time
+        const hours = Math.floor(elapsedTime / 3600000);
+        const minutes = Math.floor((elapsedTime % 3600000) / 60000);
+        const seconds = Math.floor((elapsedTime % 60000) / 1000);
+        const milliseconds = elapsedTime % 1000;
 
-    timers.forEach(function (timerElement) {
-        const durationStr = timerElement.getAttribute('data-duration'); // Get the data-duration
-        const totalDuration = parseInt(durationStr, 10); // Total duration in seconds
-        let elapsedTime = 0; // Start from 0 seconds
+        // Update the main timer display
+        timerElement.textContent =
+            (hours < 10 ? '0' : '') + hours + ':' +
+            (minutes < 10 ? '0' : '') + minutes + ':' +
+            (seconds < 10 ? '0' : '') + seconds + '.' +
+            (milliseconds < 100 ? '0' : '') + (milliseconds < 10 ? '0' : '') + milliseconds;
 
-        if (isNaN(totalDuration) || totalDuration <= 0) {
-            console.error(`Invalid duration: ${durationStr}`);
-            timerElement.textContent = "Invalid timer";
-            return;
+        // Stop the timer if the duration has been reached
+        if (elapsedTime >= timerDuration) {
+            clearInterval(currentTimerInterval);
+            timerElement.textContent = "Time's up!";
+            stopButton.disabled = true;
+        } else {
+            elapsedTime++;
         }
+    }
 
-        console.log(`Timer ${timerElement.id} set for ${totalDuration} seconds`);
+    startButton.addEventListener('click', function () {
+        timerDuration = parseInt(document.getElementById('duration').value, 10) * 1000; // Convert to milliseconds
+        elapsedTime = 0;
+        startButton.disabled = true;
+        stopButton.disabled = false;
 
-        function updateTimer() {
-            const hours = Math.floor(elapsedTime / 3600);
-            const minutes = Math.floor((elapsedTime % 3600) / 60);
-            const seconds = elapsedTime % 60;
+        // Start the interval
+        currentTimerInterval = setInterval(updateTimer, 1); // Update every millisecond
+    });
 
-            // Update the timer's display text
-            timerElement.textContent =
-                (hours < 10 ? '0' : '') + hours + ':' +
-                (minutes < 10 ? '0' : '') + minutes + ':' +
-                (seconds < 10 ? '0' : '') + seconds;
-
-            // Stop the timer when it reaches the total duration
-            if (elapsedTime >= totalDuration) {
-                clearInterval(interval);
-                timerElement.textContent = "Time's up!";
-            } else {
-                elapsedTime++;
-            }
-        }
-
-        // Start the interval to update the timer every second
-        const interval = setInterval(updateTimer, 1000);
-
-        // Run updateTimer immediately to show the initial time
-        updateTimer();
+    stopButton.addEventListener('click', function () {
+        clearInterval(currentTimerInterval);
+        startButton.disabled = false;
+        stopButton.disabled = true;
+        timerElement.textContent = "00:00:00.000"; // Reset the timer
     });
 });
