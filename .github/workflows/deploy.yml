@@ -1,16 +1,17 @@
-name: Deploy to GitHub Pages
+name: deploy
 
 on:
   push:
     branches:
-      - main  # Trigger deployment on push to main branch
-  pull_request:
-    branches:
-      - main
+      - main  # Trigger deployment on push to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Allow writing to the repository
+      pages: write     # Allow writing to GitHub Pages
 
     steps:
     - name: Checkout repository
@@ -32,5 +33,6 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist
+        github_token: ${{ secrets.GITHUB_TOKEN }}  # This token should have permission to write to the repository
+        publish_dir: ./dist  # The directory containing the built files
+        publish_branch: gh-pages  # The branch that will be deployed to
