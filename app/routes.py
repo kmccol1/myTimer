@@ -21,8 +21,7 @@ def contact():
 
 @app.route("/render")
 def render_page():
-    # Assuming 'timers' is a list or object we want to pass into the template
-    rendered_html = render_template('timer.html', timers=timers)
+    rendered_html = render_template('timer.html')  # No need to pass timers data here
 
     # Ensure the dist directory exists
     os.makedirs('dist', exist_ok=True)

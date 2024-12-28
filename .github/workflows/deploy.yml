@@ -16,30 +16,23 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.11'  # Use your desired Python version
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt  # Ensure Flask and any other dependencies are listed here
+        pip install -r requirements.txt
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18'  # Use your desired Node.js version
+        node-version: '18'
 
     - name: Install npm dependencies
-      run: |
-        npm install
+      run: npm install
 
     - name: Run build
-      run: |
-        rm -rf dist && mkdir -p dist
-        flask run --no-reload --host=0.0.0.0 --port=5000 & sleep 5
-        curl http://localhost:5000/render
-        rsync -av --exclude='.git' --exclude='node_modules' --exclude='scripts' --exclude='*.log' ./ dist/
-        cp ./dist/index.html dist/index.html
-        rm -rf dist/node_modules dist/scripts
+      run: npm run build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
