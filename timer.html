@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="timer-container">
+        <!-- Main Timer Display -->
+        <div class="main-timer">
+            <span id="current-timer">00:00:00.000</span>
+        </div>
+
+        <!-- Timer Controls -->
+        <div class="timer-controls">
+            <button id="start-btn" onclick="startTimer()">Start</button>
+            <button id="stop-btn" onclick="stopTimer()" disabled>Stop</button>
+        </div>
+
+        <!-- Past Timers Display (optional) -->
+        <ul>
+            {% for timer in timers %}
+                <li>
+                    Timer #{{ timer.id }} ({{ timer.duration }} seconds)
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Include JavaScript -->
+    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+{% endblock %}
