@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "mkdir -p dist && rsync -av --exclude='.git' --exclude='myEnv/' --exclude='dist/' ./ dist/"
+  "build": "rm -rf dist && mkdir -p dist && rsync -av --exclude='.git' --exclude='node_modules' --exclude='scripts' --exclude='*.log' ./ dist/ && rm -rf dist/node_modules dist/scripts"
   },
   "keywords": [],
   "author": "",

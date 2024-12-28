@@ -1,6 +1,14 @@
 # Ignore virtual environment directories
 myEnv/
-/node_modules
 
-# Ignore the dist directory
+# Node modules
+node_modules/
+
+# Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Other unwanted files
 dist/
+scripts/

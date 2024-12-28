@@ -1,4 +1,4 @@
-name: deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -25,16 +25,11 @@ jobs:
       run: |
         npm install
 
-    - name: Build and deploy to GitHub Pages
+    - name: Build the app
       run: |
         npm run build
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git add -A
-        git commit -m "Deploy to GitHub Pages"
-        git push --force --quiet "https://github.com/${{ github.repository }}" HEAD:gh-pages
 
-    - name: GitHub Pages Deployment
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
