@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-  "build": "rm -rf dist && mkdir -p dist && rsync -av --exclude='.git' --exclude='node_modules' --exclude='scripts' --exclude='*.log' ./ dist/ && cp ./timer.html dist/index.html && rm -rf dist/node_modules dist/scripts"  },
+      "build": "rm -rf dist && mkdir -p dist && flask run --no-reload --host=0.0.0.0 --port=5000 & sleep 5 && curl http://localhost:5000/render && rsync -av --exclude='.git' --exclude='node_modules' --exclude='scripts' --exclude='*.log' ./ dist/ && cp ./dist/index.html dist/index.html && rm -rf dist/node_modules dist/scripts"  },
   "keywords": [],
   "author": "",
   "license": "ISC",
