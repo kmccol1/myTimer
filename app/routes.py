@@ -21,13 +21,11 @@ def contact():
 
 @app.route("/render")
 def render_page():
-    rendered_html = render_template('timer.html')  # No need to pass timers data here
-
-    # Ensure the dist directory exists
+    rendered_html = render_template('timer.html')
     os.makedirs('dist', exist_ok=True)
 
-    # Write the rendered HTML to dist/index.html
     with open('dist/index.html', 'w') as f:
         f.write(rendered_html)
 
+    print("Successfully rendered index.html")
     return "Rendered index.html in dist/"
