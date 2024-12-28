@@ -8,12 +8,12 @@
 
         <!-- Timer Controls -->
         <div class="timer-controls">
-            <button id="start-btn">Start</button>
-            <button id="stop-btn" disabled>Stop</button>
+            <button id="start-btn" onclick="startTimer()">Start</button>
+            <button id="stop-btn" onclick="stopTimer()" disabled>Stop</button>
         </div>
 
         <!-- Timer Length Selection -->
-        <form action="/start" method="POST" class="timer-duration-selection">
+        <form id="timer-form" action="/start" method="POST" class="timer-duration-selection" onsubmit="startTimer(); return false;">
             <label for="duration">Select Timer Length:</label>
             <select name="duration" id="duration" required>
                 <option value="60">1 minute</option>
