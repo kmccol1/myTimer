@@ -52,7 +52,7 @@ myTimer App is a Python Flask-based web application designed to help anyone mana
 ## File Structure
 
 ```
-elegant-timer-app/
+myTimer-app/
 ├── app/
 │   ├── templates/
 │   │   ├── base.html
@@ -78,4 +78,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ---
 
-**Developed by Kyle McColgan**
+**Developed in STL**

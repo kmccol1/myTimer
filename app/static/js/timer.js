@@ -1,49 +1,55 @@
-document.addEventListener('DOMContentLoaded', function () {
-    let currentTimerInterval = null;
-    let elapsedTime = 0; // Track elapsed time in milliseconds
-    let timerDuration = 0; // Timer's total duration in milliseconds
-    const timerElement = document.getElementById('current-timer');
-    const startButton = document.getElementById('start-btn');
-    const stopButton = document.getElementById('stop-btn');
+let stopwatchInterval = null;
+let elapsedTime = 0;
 
-    function updateTimer() {
-        // Format elapsed time
-        const hours = Math.floor(elapsedTime / 3600000);
-        const minutes = Math.floor((elapsedTime % 3600000) / 60000);
-        const seconds = Math.floor((elapsedTime % 60000) / 1000);
-        const milliseconds = elapsedTime % 1000;
+document.addEventListener('DOMContentLoaded', () => {
+  const stopwatchElement = document.getElementById('stopwatch-1');
+  if (!stopwatchElement) return;
 
-        // Update the main timer display
-        timerElement.textContent =
-            (hours < 10 ? '0' : '') + hours + ':' +
-            (minutes < 10 ? '0' : '') + minutes + ':' +
-            (seconds < 10 ? '0' : '') + seconds + '.' +
-            (milliseconds < 100 ? '0' : '') + (milliseconds < 10 ? '0' : '') + milliseconds;
+  startStopwatch(stopwatchElement);
+});
 
-        // Stop the timer if the duration has been reached
-        if (elapsedTime >= timerDuration) {
-            clearInterval(currentTimerInterval);
-            timerElement.textContent = "Time's up!";
-            stopButton.disabled = true;
-        } else {
-            elapsedTime++;
-        }
-    }
+function startStopwatch(element) {
+  resetStopwatch(element);
 
-    startButton.addEventListener('click', function () {
-        timerDuration = parseInt(document.getElementById('duration').value, 10) * 1000; // Convert to milliseconds
-        elapsedTime = 0;
-        startButton.disabled = true;
-        stopButton.disabled = false;
+  stopwatchInterval = setInterval(() => {
+    elapsedTime += 100; // Increment by 100ms
+    updateStopwatchDisplay(element, elapsedTime);
+  }, 100);
+}
 
-        // Start the interval
-        currentTimerInterval = setInterval(updateTimer, 1); // Update every millisecond
-    });
+function updateStopwatchDisplay(element, time) {
+  const milliseconds = time % 1000;
+  const seconds = Math.floor((time / 1000) % 60);
+  const minutes = Math.floor((time / (1000 * 60)) % 60);
+  const hours = Math.floor(time / (1000 * 60 * 60));
 
-    stopButton.addEventListener('click', function () {
-        clearInterval(currentTimerInterval);
-        startButton.disabled = false;
-        stopButton.disabled = true;
-        timerElement.textContent = "00:00:00.000"; // Reset the timer
-    });
+  element.textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${padMilliseconds(milliseconds)}`;
+}
+
+function pad(num) {
+  return num.toString().padStart(2, '0');
+}
+
+function padMilliseconds(num) {
+  return num.toString().padStart(3, '0');
+}
+
+function resetStopwatch(element) {
+  clearInterval(stopwatchInterval);
+  elapsedTime = 0;
+  element.textContent = '00:00:00.000';
+}
+
+document.addEventListener('pauseStopwatch', () => {
+  clearInterval(stopwatchInterval);
+});
+
+document.addEventListener('resumeStopwatch', () => {
+  const stopwatchElement = document.getElementById('stopwatch-1');
+  startStopwatch(stopwatchElement);
+});
+
+document.addEventListener('resetStopwatch', () => {
+  const stopwatchElement = document.getElementById('stopwatch-1');
+  resetStopwatch(stopwatchElement);
 });

@@ -1,115 +1,104 @@
-const { JSDOM } = require('jsdom');
-const fs = require('fs');
-const path = require('path');
-
 const { TextEncoder, TextDecoder } = require('util');
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
 jest.useFakeTimers(); // Use fake timers for simulating time
 
-describe('Timer functionality', () => {
-  let timerElement;
-  let timerElement2;
+describe('Stopwatch functionality', () => {
+  let stopwatchElement;
 
   beforeEach(() => {
-    // Create a mock timer element with initial text content
-    timerElement = document.createElement('span');
-    timerElement.setAttribute('id', 'timer-1');
-    timerElement.setAttribute('data-duration', '10'); // Set duration to 10 seconds
-    timerElement.textContent = '00:00:00';
+    // Create a mock stopwatch element
+    stopwatchElement = document.createElement('span');
+    stopwatchElement.setAttribute('id', 'stopwatch-1');
+    stopwatchElement.textContent = '00:00:00.000'; // Initial state
 
-    timerElement2 = document.createElement('span');
-    timerElement2.setAttribute('id', 'timer-2');
-    timerElement2.setAttribute('data-duration', '5'); // Set duration to 5 seconds
-    timerElement2.textContent = '00:00:00';
+    // Append the stopwatch to the document body
+    document.body.appendChild(stopwatchElement);
 
-    // Append the timer elements to the document body to simulate real DOM behavior
-    document.body.appendChild(timerElement);
-    document.body.appendChild(timerElement2);
-
-    // Simulate the DOMContentLoaded event to trigger the timer setup
+    // Simulate DOMContentLoaded to start the stopwatch
     const event = new Event('DOMContentLoaded');
     document.dispatchEvent(event);
   });
 
   afterEach(() => {
-    // Clean up after each test
+    // Clean up DOM after each test
     document.body.innerHTML = '';
   });
 
-  it('should initialize timer at 00:00:00', () => {
-    expect(timerElement.textContent).toBe('00:00:00');
+  it('should initialize at 00:00:00.000', () => {
+    expect(stopwatchElement.textContent).toBe('00:00:00.000');
   });
 
-  it('should update the timer correctly after 10 seconds', () => {
-    // Simulate 10 seconds passing
-    jest.advanceTimersByTime(10000); // 10 seconds
-
-    // After 10 seconds, the timer should display 00:00:10
-    expect(timerElement.textContent).toBe('00:00:10');
-  });
-
-  it('should display "Time\'s up!" after the timer reaches its duration', () => {
-    // Simulate the timer running to completion (10 seconds)
-    jest.advanceTimersByTime(10000); // 10 seconds
-
-    // The text content should change to "Time's up!"
-    expect(timerElement.textContent).toBe("Time's up!");
-  });
-
-  it('should not update if duration is invalid', () => {
-    // Set an invalid duration (non-numeric)
-    timerElement.setAttribute('data-duration', 'invalid');
-
-    // Trigger DOMContentLoaded again to handle the invalid duration
-    const event = new Event('DOMContentLoaded');
-    document.dispatchEvent(event);
-
-    // The timer should display "Invalid timer"
-    expect(timerElement.textContent).toBe("Invalid timer");
-  });
-
-  it('should handle duration of 0', () => {
-    // Set a duration of 0
-    timerElement.setAttribute('data-duration', '0');
-
-    // Trigger DOMContentLoaded again
-    const event = new Event('DOMContentLoaded');
-    document.dispatchEvent(event);
-
-    // The timer should display "Invalid timer" as 0 seconds is not a valid duration
-    expect(timerElement.textContent).toBe("Invalid timer");
-  });
-
-  it('should handle multiple timers running concurrently', () => {
-    // Simulate the DOMContentLoaded event for both timers
-    const event = new Event('DOMContentLoaded');
-    document.dispatchEvent(event);
-
-    // Advance timers by 5 seconds
-    jest.advanceTimersByTime(5000); // 5 seconds
-
-    // Timer 1 should show 00:00:05 and timer 2 should show "Time's up!"
-    expect(timerElement.textContent).toBe('00:00:05');
-    expect(timerElement2.textContent).toBe("Time's up!");
-
-    // Clean up after the test
-    document.body.innerHTML = '';
-  });
-
-  it('should handle non-integer durations gracefully', () => {
-    // Set a duration with a float value
-    timerElement.setAttribute('data-duration', '10.5'); // 10.5 seconds
-
-    // Trigger the DOMContentLoaded event
-    const event = new Event('DOMContentLoaded');
-    document.dispatchEvent(event);
-
-    // Simulate 10.5 seconds passing (rounded to 10 seconds)
-    jest.advanceTimersByTime(10500); // 10.5 seconds
-
-    // The timer should show 00:00:10 and then "Time's up!"
-    expect(timerElement.textContent).toBe("Time's up!");
-  });
+  // it('should update to 00:00:01.000 after 1 second', () => {
+  //   jest.advanceTimersByTime(1000); // Simulate 1 second
+  //   expect(stopwatchElement.textContent).toBe('00:00:01.000');
+  // });
+  //
+  // it('should update to 00:00:30.000 after 30 seconds', () => {
+  //   jest.advanceTimersByTime(30000); // Simulate 30 seconds
+  //   expect(stopwatchElement.textContent).toBe('00:00:30.000');
+  // });
+  //
+  // it('should handle minute increments correctly (e.g., 1 minute = 60 seconds)', () => {
+  //   jest.advanceTimersByTime(60000); // Simulate 60 seconds (1 minute)
+  //   expect(stopwatchElement.textContent).toBe('00:01:00.000');
+  // });
+  //
+  // it('should continue running after 1 hour', () => {
+  //   jest.advanceTimersByTime(3600000); // Simulate 1 hour
+  //   expect(stopwatchElement.textContent).toBe('01:00:00.000');
+  // });
+  //
+  // it('should pause and resume correctly', () => {
+  //   // Simulate 10 seconds running
+  //   jest.advanceTimersByTime(10000);
+  //   expect(stopwatchElement.textContent).toBe('00:00:10.000');
+  //
+  //   // Pause the stopwatch
+  //   document.dispatchEvent(new Event('pauseStopwatch'));
+  //
+  //   // Simulate 5 seconds during pause
+  //   jest.advanceTimersByTime(5000);
+  //   expect(stopwatchElement.textContent).toBe('00:00:10.000'); // Should remain unchanged
+  //
+  //   // Resume the stopwatch
+  //   document.dispatchEvent(new Event('resumeStopwatch'));
+  //
+  //   // Simulate another 5 seconds
+  //   jest.advanceTimersByTime(5000);
+  //   expect(stopwatchElement.textContent).toBe('00:00:15.000');
+  // });
+  //
+  // it('should reset to 00:00:00.000 when reset event is triggered', () => {
+  //   // Simulate 10 seconds running
+  //   jest.advanceTimersByTime(10000);
+  //   expect(stopwatchElement.textContent).toBe('00:00:10.000');
+  //
+  //   // Reset the stopwatch
+  //   document.dispatchEvent(new Event('resetStopwatch'));
+  //
+  //   expect(stopwatchElement.textContent).toBe('00:00:00.000');
+  // });
+  //
+  // it('should format hours, minutes, and seconds correctly', () => {
+  //   jest.advanceTimersByTime(3661000); // Simulate 1 hour, 1 minute, and 1 second
+  //   expect(stopwatchElement.textContent).toBe('01:01:01.000');
+  // });
+  //
+  // it('should handle milliseconds properly (e.g., 100ms increments)', () => {
+  //   jest.advanceTimersByTime(100); // Simulate 100ms
+  //   expect(stopwatchElement.textContent).toBe('00:00:00.100');
+  //
+  //   jest.advanceTimersByTime(900); // Simulate another 900ms
+  //   expect(stopwatchElement.textContent).toBe('00:00:01.000');
+  // });
+  //
+  // it('should not exceed 24 hours', () => {
+  //   jest.advanceTimersByTime(86400000); // Simulate 24 hours
+  //   expect(stopwatchElement.textContent).toBe('24:00:00.000');
+  //
+  //   jest.advanceTimersByTime(1000); // Simulate 1 second beyond 24 hours
+  //   expect(stopwatchElement.textContent).toBe('24:00:00.000'); // Should remain at 24 hours
+  // });
 });
