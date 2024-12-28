@@ -21,7 +21,14 @@ def contact():
 
 @app.route("/render")
 def render_page():
+    # Assuming 'timers' is a list or object we want to pass into the template
     rendered_html = render_template('timer.html', timers=timers)
+
+    # Ensure the dist directory exists
+    os.makedirs('dist', exist_ok=True)
+
+    # Write the rendered HTML to dist/index.html
     with open('dist/index.html', 'w') as f:
         f.write(rendered_html)
-    return "Rendered index.html"
+
+    return "Rendered index.html in dist/"
