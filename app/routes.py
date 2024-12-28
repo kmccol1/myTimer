@@ -7,3 +7,13 @@ bp = Blueprint('routes', __name__)
 @bp.route('/', methods=['GET'])
 def root():
     return render_template('timer.html')
+
+# New About Page Route
+@bp.route('/about')
+def about():
+    return render_template('about.html')
+
+# New Contact Page Route
+@bp.route('/contact')
+def contact():
+    return render_template('contact.html')
