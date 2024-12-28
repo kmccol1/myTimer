@@ -1,0 +1,14 @@
+# Ignore virtual environment directories
+myEnv/
+
+# Node modules
+node_modules/
+
+# Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Other unwanted files
+dist/
+scripts/

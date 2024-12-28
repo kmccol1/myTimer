@@ -1,0 +1,24 @@
+{
+  "name": "mytimer-app",
+  "version": "1.0.0",
+  "description": "myTimer App is a Python Flask-based web application designed to help anyone manage tasks with a simple timer interface. The app allows one to start, track, and stop timers, with durations displayed dynamically in real-time.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+  "build": "rm -rf dist && mkdir -p dist && rsync -av --exclude='.git' --exclude='node_modules' --exclude='scripts' --exclude='*.log' ./ dist/ && rm -rf dist/node_modules dist/scripts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.0.0",
+    "jsdom": "^25.0.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
+    "testEnvironment": "jsdom"
+  }
+}
