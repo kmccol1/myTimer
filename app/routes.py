@@ -21,11 +21,26 @@ def contact():
 
 @app.route("/render")
 def render_page():
+    # Logging to confirm route is hit
+    print("Render route hit...")
+
+    # Render the HTML from the template
     rendered_html = render_template('timer.html')
+
+    # Ensure the dist directory exists
     os.makedirs('dist', exist_ok=True)
 
-    with open('dist/index.html', 'w') as f:
-        f.write(rendered_html)
+    # Confirm the dist directory exists
+    print(f"Dist directory exists: {os.path.isdir('dist')}")
 
-    print("Successfully rendered index.html")
+    # Writing the rendered HTML to index.html
+    try:
+        with open('dist/index.html', 'w') as f:
+            f.write(rendered_html)
+        print("Successfully rendered index.html")
+    except Exception as e:
+        print(f"Error while writing to file: {e}")
+        return "Error rendering index.html", 500
+
+    # Return confirmation message
     return "Rendered index.html in dist/"
