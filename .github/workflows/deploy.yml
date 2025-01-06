@@ -42,7 +42,9 @@ jobs:
       run: npm install
 
     - name: Run build
-      run: npm run build
+      run: |
+        source myEnv/bin/activate
+        npm run build
 
     - name: Verify dist/ directory contents
       run: |
