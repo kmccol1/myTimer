@@ -13,12 +13,20 @@
             <button id="stop-btn" onclick="stopTimer()" disabled>Stop</button>
         </div>
 
-        <!-- Past Timers Display (optional, for static display) -->
+        <!-- Curated Timer Lengths -->
+        <div class="curated-timers">
+            <p>Quick Timers:</p>
+            <div>
+                <button onclick="setTimer(60)">1 Minute</button>
+                <button onclick="setTimer(300)">5 Minutes</button>
+                <button onclick="setTimer(900)">15 Minutes</button>
+                <button onclick="setTimer(3600)">1 Hour</button>
+            </div>
+        </div>
+
+        <!-- Past Timers Display -->
         <ul id="past-timers">
-            <!-- You can leave this empty or use static data if needed -->
-            <!-- Example static past timers -->
-            <li>Timer #1 (120 seconds)</li>
-            <li>Timer #2 (150 seconds)</li>
+            <!-- Dynamic past timers will be loaded here -->
         </ul>
     </div>
 

@@ -18,8 +18,10 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install dependencies
+    - name: Create and activate virtual environment
       run: |
+        python -m venv myEnv
+        source myEnv/bin/activate
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
@@ -27,6 +29,14 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '18'
+
+    - name: Cache Node.js dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
 
     - name: Install npm dependencies
       run: npm install
