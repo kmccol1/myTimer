@@ -25,6 +25,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Install rsync
+      run: sudo apt-get update && sudo apt-get install -y rsync
+
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
@@ -47,8 +50,7 @@ jobs:
         npm run build
 
     - name: Verify dist/ directory contents
-      run: |
-        ls -la dist/
+      run: ls -la dist/
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3

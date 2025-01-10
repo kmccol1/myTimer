@@ -1,4 +1,6 @@
 from flask import Flask, Blueprint, render_template
+import shutil
+import os
 
 # Define the blueprint
 bp = Blueprint('routes', __name__)
@@ -30,10 +32,7 @@ def render_page():
     # Ensure the dist directory exists
     os.makedirs('dist', exist_ok=True)
 
-    # Confirm the dist directory exists
-    print(f"Dist directory exists: {os.path.isdir('dist')}")
-
-    # Writing the rendered HTML to index.html
+    # Write the rendered HTML to index.html
     try:
         with open('dist/index.html', 'w') as f:
             f.write(rendered_html)
@@ -42,5 +41,16 @@ def render_page():
         print(f"Error while writing to file: {e}")
         return "Error rendering index.html", 500
 
+    # Copy static assets to dist/
+    try:
+        if os.path.exists('static'):
+            shutil.copytree('static', 'dist/static', dirs_exist_ok=True)
+            print("Successfully copied static files")
+        else:
+            print("Static directory does not exist")
+    except Exception as e:
+        print(f"Error while copying static files: {e}")
+        return "Error copying static files", 500
+
     # Return confirmation message
-    return "Rendered index.html in dist/"
+    return "Rendered index.html and copied static files in dist/"

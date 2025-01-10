@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="static/css/styles.css">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
     <title>Timer App</title>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">
-                <a href="{{ url_for('routes.root') }}">Timer App</a>
+                <a href="index.html">Timer App</a>
             </div>
             <ul class="nav-links">
-                <li><a href="{{ url_for('routes.root') }}">Home</a></li>
-                <li><a href="{{ url_for('routes.about') }}">About</a></li>
-                <li><a href="{{ url_for('routes.contact') }}">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -27,7 +31,7 @@
     </main>
 
     <footer>
-        <p>&copy; {{ current_year }} myTimer App. Made in STL. All rights reserved.</p>
+        <p>&copy; {{ current_year }} myTimer Inc. Made in STL. All rights reserved.</p>
     </footer>
 </body>
 </html>

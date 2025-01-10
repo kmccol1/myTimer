@@ -62,7 +62,7 @@ myTimer-app/
 │   ├── __init__.py
 │   ├── routes.py
 │   ├── models.py
-├── venv/
+├── myEnv/
 ├── requirements.txt
 ├── README.md
 └── run.py

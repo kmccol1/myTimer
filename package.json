@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-            "build": "rm -rf dist && mkdir -p dist && flask run --no-reload --host=0.0.0.0 --port=5000 & FLASK_PID=$! && echo 'Sleeping for 20 seconds to ensure Flask is ready...' && sleep 20 && curl --fail http://localhost:5000/render && kill $FLASK_PID && rsync -av --exclude='.git' --exclude='node_modules' --exclude='scripts' --exclude='*.log' ./ dist/"  },
+            "build": "rm -rf dist && mkdir -p dist && source myEnv/bin/activate && flask run --no-reload --host=0.0.0.0 --port=5000 & FLASK_PID=$! && sleep 20 && curl --fail http://localhost:5000/render || (kill $FLASK_PID && exit 1) && kill $FLASK_PID && rsync -av --exclude='.git' --exclude='node_modules' --exclude='scripts' --exclude='*.log' ./ dist/"  },
   "keywords": [],
   "author": "",
   "license": "ISC",
