@@ -30,6 +30,7 @@
         </ul>
     </div>
 
-    <!-- Include JavaScript for static GitHub Pages host deployment... -->
-    <script src="static/js/timer.js"></script>
+    <!-- Import the JavaScript functions for static GitHub Pages host deployment. -->
+    <!-- Corrected script import to load the new timer.mjs file. -->
+    <script type="module" src="{{ url_for('routes.serve_mjs', filename='timer.mjs') }}"></script>
 {% endblock %}

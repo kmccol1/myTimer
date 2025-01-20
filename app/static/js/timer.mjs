@@ -1,3 +1,6 @@
+//timer.mjs
+
+//Fields below.
 let startTime;
 let updatedTime;
 let difference;
@@ -8,21 +11,29 @@ let countdownMode = false;
 let countdownEndTime;
 
 let storageAvailable = true;
-let fallbackStorage = []; // Fallback for incognito mode
-
-
+let fallbackStorage = []; // Fallback for incognito mode.
 
 const startBtn = document.getElementById("start-btn");
 const stopBtn = document.getElementById("stop-btn");
 const timerDisplay = document.getElementById("current-timer");
 
+//let startBtn, stopBtn, timerDisplay;
+
+//document.addEventListener("DOMContentLoaded", () => {
+//    startBtn = document.getElementById("start-btn");
+//    stopBtn = document.getElementById("stop-btn");
+//    timerDisplay = document.getElementById("current-timer");
+//});
+
 function startTimer()
 {
+    const startBtn = document.getElementById("start-btn");
+    const stopBtn = document.getElementById("stop-btn");
+
     if (!running)
     {
         if (!countdownMode)
         {
-            // Regular stopwatch functionality
             startTime = new Date().getTime() - elapsedTime;
         }
         interval = setInterval(updateTime, 1);
@@ -46,12 +57,12 @@ function setTimer(seconds)
         clearInterval(interval);
     }
     countdownMode = true;
-    countdownEndTime = new Date().getTime() + seconds * 1000; // Set the end time for the countdown
-    updateTime(seconds * 1000); // Immediately update display
+    countdownEndTime = new Date().getTime() + seconds * 1000; // Set the end time for the countdown.
+    updateTime(seconds * 1000); // Immediately update display.
     startBtn.innerHTML = "Pause";
     stopBtn.disabled = false;
     running = true;
-    interval = setInterval(updateTime, 1); // Start countdown
+    interval = setInterval(updateTime, 1); // Start countdown.
 }
 
 function stopTimer()
@@ -60,12 +71,12 @@ function stopTimer()
     startBtn.innerHTML = "Start";
     stopBtn.disabled = true;
     running = false;
-    elapsedTime = 0; // Reset the stopwatch
-    countdownMode = false; // Exit countdown mode
+    elapsedTime = 0; // Reset the stopwatch.
+    countdownMode = false; // Exit countdown mode.
     timerDisplay.innerHTML = "00:00:00.000";
 }
 
-// Updated Countdown Completion Logic
+//Countdown Completion Logic.
 function updateTime(timerDuration = null)
 {
     let displayTime;
@@ -79,7 +90,7 @@ function updateTime(timerDuration = null)
         {
             clearInterval(interval);
             timerDisplay.innerHTML = "00:00:00.000";
-            savePastTimer(timerDuration || elapsedTime); // Save completed timer
+            savePastTimer(timerDuration || elapsedTime); // Save completed timer.
             alert("Time's up!");
             running = false;
             countdownMode = false;
@@ -173,7 +184,10 @@ function formatTime(milliseconds)
     return `${formattedHours}${formattedMinutes}${formattedSeconds}`.trim();
 }
 
-// Check if local storage is available
+// Use ES Modules export syntax:
+export { startTimer, stopTimer, setTimer, updateTime, formatTime, updatePastTimersDisplay, savePastTimer };
+
+// Check if local storage is available.
 try
 {
     localStorage.setItem("test", "test");
@@ -184,10 +198,15 @@ catch (e)
     storageAvailable = false;
 }
 
-// Load past timers on page load
+// Load past timers on page load.
 
 window.onload = () => {
     console.log("Loaded timers from storage:", localStorage.getItem("pastTimers"));
     updatePastTimersDisplay();
 };
+
+
+window.startTimer = startTimer; // Attach the function to the window object
+window.stopTimer = stopTimer;
+window.setTimer = setTimer;
 

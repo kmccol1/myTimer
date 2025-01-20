@@ -1,28 +1,52 @@
+//timer.test.js
+
 const { TextEncoder, TextDecoder } = require('util');
+import { startTimer, stopTimer, setTimer, updateTime, formatTime, updatePastTimersDisplay, savePastTimer } from '../static/js/timer.mjs';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-jest.useFakeTimers(); // Use fake timers for simulating time
+jest.useFakeTimers(); // Use fake timers for simulating time.
 
 describe('Stopwatch functionality', () => {
   let stopwatchElement;
+  let startBtn;
+  let stopBtn;
 
   beforeEach(() => {
-    // Create a mock stopwatch element
+    // Create mock elements for stopwatch, buttons, and timer display.
     stopwatchElement = document.createElement('span');
     stopwatchElement.setAttribute('id', 'stopwatch-1');
-    stopwatchElement.textContent = '00:00:00.000'; // Initial state
+    stopwatchElement.textContent = '00:00:00.000'; // Initial state.
 
-    // Append the stopwatch to the document body
+    startBtn = document.createElement('button');
+    startBtn.setAttribute('id', 'start-btn');
+    startBtn.textContent = 'Start';
+
+    stopBtn = document.createElement('button');
+    stopBtn.setAttribute('id', 'stop-btn');
+    stopBtn.disabled = true;
+
+    const timerDisplay = document.createElement('span');
+    timerDisplay.setAttribute('id', 'current-timer');
+    timerDisplay.textContent = '00:00:00.000'; // Initial state.
+
+    // Append all elements to the document body.
     document.body.appendChild(stopwatchElement);
+    document.body.appendChild(startBtn);
+    document.body.appendChild(stopBtn);
+    document.body.appendChild(timerDisplay); // Add the timer display to the body.
 
-    // Simulate DOMContentLoaded to start the stopwatch
+    // Trigger DOMContentLoaded event to simulate browser readiness.
     const event = new Event('DOMContentLoaded');
     document.dispatchEvent(event);
+
+    // Set up fake timers.
+    jest.useFakeTimers();
   });
 
   afterEach(() => {
-    // Clean up DOM after each test
+    jest.clearAllTimers();
+    // Clean up DOM after each test.
     document.body.innerHTML = '';
   });
 
@@ -30,9 +54,33 @@ describe('Stopwatch functionality', () => {
     expect(stopwatchElement.textContent).toBe('00:00:00.000');
   });
 
-  // it('should update to 00:00:01.000 after 1 second', () => {
-  //   jest.advanceTimersByTime(1000); // Simulate 1 second
-  //   expect(stopwatchElement.textContent).toBe('00:00:01.000');
+  // it('should update to 00:00:01.000 after 1 second', async () => {
+  //   // Mock the DOM element retrieval.
+  //   const stopwatchElement = document.getElementById('stopwatch-1');
+  //   const timerDisplay = document.getElementById('current-timer');
+  //
+  //   // Ensure stopwatchElement and timerDisplay are assigned correctly.
+  //   expect(stopwatchElement).not.toBeNull();
+  //   expect(timerDisplay).not.toBeNull();
+  //
+  //   // Append start and stop buttons again to ensure they exist.
+  //   document.body.appendChild(startBtn);
+  //   document.body.appendChild(stopBtn);
+  //
+  //   // Start the stopwatch.
+  //   startTimer();
+  //
+  //   // Check the initial state.
+  //   expect(timerDisplay.textContent).toBe('00:00:00.000');
+  //
+  //   // Advancing timers by 1000ms (1 second).
+  //   jest.advanceTimersByTime(1000);
+  //
+  //   // Wait for the interval to complete.
+  //   await new Promise(resolve => setTimeout(resolve, 0));
+  //
+  //   // Check that the stopwatch element updates correctly.
+  //   expect(timerDisplay.textContent).toBe('00:00:01.000');
   // });
   //
   // it('should update to 00:00:30.000 after 30 seconds', () => {
