@@ -62,7 +62,7 @@ myTimer-app/
 │   ├── __init__.py
 │   ├── routes.py
 │   ├── models.py
-├── venv/
+├── myEnv/
 ├── requirements.txt
 ├── README.md
 └── run.py
@@ -78,4 +78,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ---
 
-**Developed in STL**
+**Developed in Saint Louis, Missouri, United States**

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block content %}
     <div class="timer-container">
         <!-- Main Timer Display -->
@@ -12,16 +13,24 @@
             <button id="stop-btn" onclick="stopTimer()" disabled>Stop</button>
         </div>
 
-        <!-- Past Timers Display (optional) -->
-        <ul>
-            {% for timer in timers %}
-                <li>
-                    Timer #{{ timer.id }} ({{ timer.duration }} seconds)
-                </li>
-            {% endfor %}
+        <!-- Curated Timer Lengths -->
+        <div class="curated-timers">
+            <p>Quick Timers:</p>
+            <div>
+                <button onclick="setTimer(60)">1 Minute</button>
+                <button onclick="setTimer(300)">5 Minutes</button>
+                <button onclick="setTimer(900)">15 Minutes</button>
+                <button onclick="setTimer(3600)">1 Hour</button>
+            </div>
+        </div>
+
+        <!-- Past Timers Display -->
+        <ul id="past-timers">
+            <!-- Dynamic past timers will be loaded here -->
         </ul>
     </div>
 
-    <!-- Include JavaScript -->
-    <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+    <!-- Import the JavaScript functions for static GitHub Pages host deployment. -->
+    <!-- Corrected script import to load the new timer.mjs file. -->
+    <script type="module" src="{{ url_for('routes.serve_mjs', filename='timer.mjs') }}"></script>
 {% endblock %}
