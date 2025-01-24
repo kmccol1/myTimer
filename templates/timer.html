@@ -31,6 +31,6 @@
     </div>
 
     <!-- Import the JavaScript functions for static GitHub Pages host deployment. -->
-    <!-- Corrected static script import to load the new timer.mjs file. -->
-    <script type="module" src="{{ url_for('static', filename='js/timer.mjs') }}"></script>
+    <!-- Corrected static timer script import to load the new timer.mjs file using relative paths. -->
+    <script type="module" src="static/js/timer.mjs"></script>
 {% endblock %}
