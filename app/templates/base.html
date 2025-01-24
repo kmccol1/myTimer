@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Add base tag in the base HTML template head element for GitHub pages. -->
-    <base href="/myTimer/">
-
-    <!-- Link to the CSS file. -->
-    <link rel="stylesheet" href="static/css/styles.css">
+    <!-- Link to the CSS file using Flask's url_for(). -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
