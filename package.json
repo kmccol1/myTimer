@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "rm -rf dist && mkdir -p dist/static/css dist/static/js && cp -r app/static/css/* dist/static/css/ && cp -r app/static/js/* dist/static/js/ && cp app/templates/timer.html dist/index.html"
+    "build": "echo 'Creating directories' && mkdir -p dist/static/css dist/static/js && flask render-static && echo 'Build complete'"
   },
   "keywords": [],
   "author": "",

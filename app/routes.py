@@ -1,10 +1,10 @@
 from flask import Flask, Blueprint, render_template, request, jsonify, send_from_directory
-from app.models import TimerLog, db
+from app.models import TimerLog
 import shutil
 import os
 
 # Define the blueprint.
-bp = Blueprint('routes', __name__)
+bp = Blueprint('main_routes', __name__)
 #app = Flask(__name__)  # This is the Flask app instance.
 
 #app.register_blueprint(bp) # Register the blueprint w/ the Flask app.
