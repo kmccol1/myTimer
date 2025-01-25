@@ -28,11 +28,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 3: Install rsync
+      # Step 3: Set the FLASK_APP environment variable
+      - name: Set FLASK_APP environment variable
+        run: echo "FLASK_APP=main.py" >> $GITHUB_ENV
+
+      # Step 4: Install rsync (if needed)
       - name: Install rsync
         run: sudo apt-get update && sudo apt-get install -y rsync
 
-      # Step 4: Set up Node.js environment.
+      # Step 5: Set up Node.js environment.
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -49,16 +53,16 @@ jobs:
       - name: Install npm dependencies
         run: npm install
 
-      # Step 5: Build the project.
+      # Step 6: Build the project.
       - name: Run build
         run: |
-          source myEnv/bin/activate
-          npm run build
+          source myEnv/bin/activate  # Activate the virtual environment
+          npm run build              # Run your build script which includes flask render-static
 
       - name: Verify dist/ directory contents
         run: ls -la dist/
 
-      # Step 6: Deploy to GitHub Pages.
+      # Step 7: Deploy to GitHub Pages.
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
