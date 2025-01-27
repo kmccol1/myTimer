@@ -1,4 +1,8 @@
 # File name: deploy.yml
+# Date: 27 January 2025
+# Author: Kyle McColgan
+# Description: The GitHub Actions and Pages deployment process.
+
 name: Build and Deploy
 
 on:
@@ -56,8 +60,8 @@ jobs:
       # Step 6: Build the project.
       - name: Run build
         run: |
-          source myEnv/bin/activate  # Activate the virtual environment
-          npm run build              # Run your build script which includes flask render-static
+          source myEnv/bin/activate  # Activate the virtual environment.
+          npm run build              # Run the build script which includes flask. render-static
 
       - name: Verify dist/ directory contents
         run: ls -la dist/
