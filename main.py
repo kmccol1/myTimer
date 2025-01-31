@@ -12,9 +12,9 @@ app = create_app()  # Initialize the app using the create_app() function.
 
 # Set base path depending on environment.
 if os.environ.get('FLASK_ENV') == 'production':
-    app.config['BASE_PATH'] = '/myTimer/'  # This is for GitHub Pages
+    app.config['BASE_PATH'] = '/myTimer/'  # This is for GitHub Pages.
 else:
-    app.config['BASE_PATH'] = '/'  # This is for local development
+    app.config['BASE_PATH'] = '/'  # This is for local development.
 
 app.jinja_env.globals['base_path'] = app.config['BASE_PATH']
 
@@ -30,13 +30,22 @@ def render_static():
 
     os.makedirs(output_folder, exist_ok=True)
 
-    # Ensure base_path includes leading slash.
-    base_path = '/'  # Always start with a leading slash for correct absolute paths.
-    app.jinja_env.globals['base_path'] = base_path
+    # Use the base_path from app.config for correct environment setup.
+    base_path = app.config['BASE_PATH']  # Use the correct base path from the configuration.
+    app.jinja_env.globals['base_path'] = base_path  # Make base_path globally available to templates.
 
     for template_name in os.listdir(template_folder):
         if template_name.endswith('.html'):
+            # Render the template with the updated base_path.
             rendered = render_template(template_name, base_path=base_path)
+
+            # If base_path is '/myTimer/', adjust static paths to avoid duplication
+            if base_path == '/myTimer/':
+                # Fix paths to make sure there's no duplication of '/myTimer/'
+                rendered = rendered.replace('href="/static/', 'href="/myTimer/dist/static/')
+                rendered = rendered.replace('src="/static/', 'src="/myTimer/dist/static/')
+
+            # Save the rendered HTML in the output folder.
             output_path = os.path.join(output_folder, template_name)
 
             with open(output_path, 'w') as f:
@@ -44,7 +53,7 @@ def render_static():
 
             print(f"Rendered {template_name} -> {output_path}")
 
-    # Make `timer.html` the `index.html` for GitHub Pages...
+    # Make `timer.html` the `index.html` for GitHub Pages.
     index_path = os.path.join(output_folder, 'index.html')
     timer_path = os.path.join(output_folder, 'timer.html')
 
