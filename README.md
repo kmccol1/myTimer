@@ -84,4 +84,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ---
 
-**Built proudly in Saint Louis**
+**Proudly built in Saint Louis**
