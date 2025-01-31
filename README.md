@@ -5,8 +5,6 @@ myTimer App is a Python Flask-based web application designed to help anyone mana
 ## Features
 
 - Start a new timer with a selectable duration.
-- Track active timers with a dynamic countdown or count-up display.
-- Stop active timers and save their duration.
 - Streamlined UI with clean HTML structure and CSS styling.
 
 ## Installation
@@ -58,14 +56,22 @@ myTimer-app/
 │   │   ├── base.html
 │   │   ├── timer.html
 │   ├── static/
-│   │   ├── styles.css
+│   │   ├── css/
+│   │   │   ├── styles.css
+│   │   ├── js/
+│   │       ├── timer.mjs
 │   ├── __init__.py
 │   ├── routes.py
 │   ├── models.py
-├── myEnv/
-├── requirements.txt
-├── README.md
-└── run.py
+├── dist/                     # Contains rendered static HTML for deployment
+│   ├── index.html
+│   ├── base.html
+│   ├── timer.html
+├── myEnv/                    # Virtual environment (should be in .gitignore)
+├── requirements.txt          # Dependencies for the project
+├── README.md                 # Project documentation
+├── main.py                   # Main Flask entry point
+└── run.py                    # Alternative script for running the app
 ```
 
 ## Contributing
@@ -78,4 +84,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ---
 
-**Developed in Saint Louis, Missouri, United States**
+**Built proudly in Saint Louis**

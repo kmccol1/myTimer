@@ -11,7 +11,7 @@ from app.routes import bp as main_routes_bp  # Import with an alias.
 app = create_app()  # Initialize the app using the create_app() function.
 
 # Set base path depending on environment
-app.config['BASE_PATH'] = '/myTimer' if os.environ.get('FLASK_ENV') == 'production' else '/'
+app.config['BASE_PATH'] = '/myTimer/' if os.environ.get('FLASK_ENV') == 'production' else '/'
 app.jinja_env.globals['base_path'] = app.config['BASE_PATH']
 
 # Add the Flask CLI command to render templates into static HTML...
