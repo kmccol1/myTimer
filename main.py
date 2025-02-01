@@ -8,13 +8,13 @@ import os
 from app import create_app
 from app.routes import bp as main_routes_bp  # Import with an alias.
 
-app = create_app()  # Initialize the app using the create_app() function.
+app = create_app()  # Initialize Flask app.
 
 # Set base path depending on environment.
 if os.environ.get('FLASK_ENV') == 'production':
-    app.config['BASE_PATH'] = '/myTimer/'  # This is for GitHub Pages.
+    app.config['BASE_PATH'] = '/myTimer/dist/'  # GitHub Pages expects this.
 else:
-    app.config['BASE_PATH'] = '/'  # This is for local development.
+    app.config['BASE_PATH'] = '/dist/'  # Local dev expects this.
 
 app.jinja_env.globals['base_path'] = app.config['BASE_PATH']
 
@@ -30,36 +30,43 @@ def render_static():
 
     os.makedirs(output_folder, exist_ok=True)
 
-    # Use the base_path from app.config for correct environment setup.
-    base_path = app.config['BASE_PATH']  # Use the correct base path from the configuration.
-    app.jinja_env.globals['base_path'] = base_path  # Make base_path globally available to templates.
+    base_path = app.config['BASE_PATH']
+    app.jinja_env.globals['base_path'] = base_path  # Make base_path globally available
 
     for template_name in os.listdir(template_folder):
         if template_name.endswith('.html'):
-            # Render the template with the updated base_path.
+            # Render the template with the updated base_path
             rendered = render_template(template_name, base_path=base_path)
 
-            # If base_path is '/myTimer/', adjust static paths to avoid duplication
+            # Adjust static paths for production (GitHub Pages) or local
             if base_path == '/myTimer/':
-                # Fix paths to make sure there's no duplication of '/myTimer/'
-                rendered = rendered.replace('href="/static/', 'href="/myTimer/dist/static/')
-                rendered = rendered.replace('src="/static/', 'src="/myTimer/dist/static/')
+                # For GitHub Pages, replace '/static/' with '/myTimer/dist/static/'
+                rendered = rendered.replace('{{ base_path }}static/', '/myTimer/dist/static/')
+                rendered = rendered.replace('href="{{ base_path }}static/', 'href="/myTimer/dist/static/')
+                rendered = rendered.replace('src="{{ base_path }}static/', 'src="/myTimer/dist/static/')
 
-            # Save the rendered HTML in the output folder.
+                # Ensure no extra '/myTimer/myTimer/' prefix
+                rendered = rendered.replace('/myTimer/myTimer/', '/myTimer/')
+            else:
+                # For local development, leave the static file paths as '/static/'
+                rendered = rendered.replace('{{ base_path }}static/', '/static/')
+                rendered = rendered.replace('href="{{ base_path }}static/', 'href="/static/')
+                rendered = rendered.replace('src="{{ base_path }}static/', 'src="/static/')
+
+            # Save the rendered HTML in the output folder
             output_path = os.path.join(output_folder, template_name)
-
             with open(output_path, 'w') as f:
                 f.write(rendered)
 
             print(f"Rendered {template_name} -> {output_path}")
 
-    # Make `timer.html` the `index.html` for GitHub Pages.
+    # Rename timer.html to index.html for GitHub Pages
     index_path = os.path.join(output_folder, 'index.html')
     timer_path = os.path.join(output_folder, 'timer.html')
-
     if os.path.exists(timer_path):
         os.rename(timer_path, index_path)
         print(f"Renamed timer.html -> index.html")
+
 
 if __name__ == '__main__':
     app.run(debug=True)

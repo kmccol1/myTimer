@@ -2,26 +2,34 @@ from flask import Flask, Blueprint, render_template, request, jsonify, send_from
 from app.models import TimerLog
 import shutil
 import os
+from flask import current_app
 
 # Define the blueprint.
 bp = Blueprint('main_routes', __name__)
-#app = Flask(__name__)  # This is the Flask app instance.
 
-#app.register_blueprint(bp) # Register the blueprint w/ the Flask app.
-
-# Serve .mjs files
+# Serve JavaScript (.mjs) files.
 @bp.route('/static/js/<path:filename>')
 def serve_mjs(filename):
-    return send_from_directory(os.path.join(bp.root_path, 'static', 'js'), filename)
+    return send_from_directory(os.path.join(current_app.root_path, 'dist', 'static', 'js'), filename)
+
+# Serve any static file from /dist/static/.
+@bp.route('/dist/static/<path:filename>')
+def serve_dist_static(filename):
+    file_path = os.path.join(current_app.root_path, '..', 'dist', 'static', filename)
+    if not os.path.exists(file_path):
+        return "File not found", 404
+    else:
+        return send_from_directory(os.path.join(current_app.root_path, '..', 'dist', 'static'), filename)
+    return send_from_directory(os.path.join(current_app.root_path, 'dist', 'static'), filename)
 
 # Add routes to the blueprint
 @bp.route('/', methods=['GET', 'POST'])
 def root():
     if request.method == 'GET':
-        # Handle GET request: render the template
-        return render_template('timer.html')
+        # Handle GET request: render the template.
+        return render_template('timer.html', base_path=current_app.config['BASE_PATH'])
     elif request.method == 'POST':
-        # Handle POST request: process the timer actions
+        # Handle POST request: process the timer actions.
         action = request.json.get('action')
 
         if action == 'start':
@@ -54,20 +62,20 @@ def root():
 # New About Page Route.
 @bp.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', base_path=current_app.config['BASE_PATH'])
 
 # New Contact Page Route.
 @bp.route('/contact')
 def contact():
-    return render_template('contact.html')
+    return render_template('contact.html', base_path=current_app.config['BASE_PATH'])
 
 @bp.route('/render', methods=['GET'])
 def render_page():
     # Logging to confirm route is hit.
     print("Render route hit...")
 
-    # Render the HTML from the template.
-    rendered_html = render_template('timer.html')
+    # Render the HTML from the template with base_path
+    rendered_html = render_template('timer.html', base_path=current_app.config['BASE_PATH'])
 
     # Ensure the dist directory exists.
     os.makedirs('dist', exist_ok=True)
