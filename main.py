@@ -60,16 +60,16 @@ def render_static():
             rendered = render_template(template_name, base_path=base_path)
 
             # Adjust static paths for production (GitHub Pages) or local.
-            if base_path == '/myTimer/':
-                # For GitHub Pages, replace '/static/' with '/myTimer/dist/static/'.
-                rendered = rendered.replace('/static/', '/myTimer/dist/static/')
-                rendered = rendered.replace('href="/static/', 'href="/myTimer/dist/static/')
-                rendered = rendered.replace('src="/static/', 'src="/myTimer/dist/static/')
-            else:
-                # For local development, leave the static file paths as '/static/'.
-                rendered = rendered.replace('/static/', '/static/')
-                rendered = rendered.replace('href="/static/', 'href="/static/')
-                rendered = rendered.replace('src="/static/', 'src="/static/')
+            # if base_path == '/myTimer/':
+            #     # For GitHub Pages, replace '/static/' with '/myTimer/dist/static/'.
+            #     rendered = rendered.replace('/static/', '/myTimer/dist/static/')
+            #     rendered = rendered.replace('href="/static/', 'href="/myTimer/dist/static/')
+            #     rendered = rendered.replace('src="/static/', 'src="/myTimer/dist/static/')
+            # else:
+            #     # For local development, leave the static file paths as '/static/'.
+            #     rendered = rendered.replace('/static/', '/static/')
+            #     rendered = rendered.replace('href="/static/', 'href="/static/')
+            #     rendered = rendered.replace('src="/static/', 'src="/static/')
 
             # Save the rendered HTML in the output folder.
             output_path = os.path.join(output_folder, template_name)
