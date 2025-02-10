@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link to the CSS file using the new BASE_PATH from main.py file. -->
+    <link rel="stylesheet" href="/myTimer/dist/static/css/styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <title>Timer App</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">Timer App</a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        
+    <div class="timer-container">
+        <!-- Main Timer Display -->
+        <div class="main-timer">
+            <span id="current-timer">00:00:00.000</span>
+        </div>
+
+        <!-- Timer Controls -->
+        <div class="timer-controls">
+            <button id="start-btn" onclick="startTimer()">Start</button>
+            <button id="stop-btn" onclick="stopTimer()" disabled>Stop</button>
+        </div>
+
+        <!-- Curated Timer Lengths -->
+        <div class="curated-timers">
+            <p>Quick Timers:</p>
+            <div>
+                <button onclick="setTimer(60)">1 Minute</button>
+                <button onclick="setTimer(300)">5 Minutes</button>
+                <button onclick="setTimer(900)">15 Minutes</button>
+                <button onclick="setTimer(3600)">1 Hour</button>
+            </div>
+        </div>
+
+        <!-- Past Timers Display -->
+        <ul id="past-timers">
+            <!-- Dynamic past timers will be loaded here -->
+        </ul>
+    </div>
+
+    <!-- Import the JavaScript functions for static GitHub Pages host deployment. -->
+    <!-- Corrected static timer script import to load the new timer.mjs file using the new BASE_PATH from main.py. -->
+    <script type="module" src="/myTimer/dist/static/js/timer.mjs"></script>
+
+
+    </main>
+
+    <footer>
+        <p>&copy;  myTimer Inc. Made in STL. All rights reserved.</p>
+    </footer>
+</body>
+</html>
