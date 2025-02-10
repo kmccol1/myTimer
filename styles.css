@@ -8,9 +8,9 @@
 /* Typography */
 body {
     font-family: 'Roboto', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
+    background: linear-gradient(to bottom, #1a1a2e, #16213e);
+    color: #fff;
+    text-align: center;
 }
 
 /* Header */
@@ -102,25 +102,117 @@ button:hover {
 }
 
 /* Center and make the main timer display large */
+/* Timer Container */
 .timer-container {
-    text-align: center;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    flex-direction: column;
+    position: relative;
 }
 
 .main-timer {
-    font-size: 80px;
+    font-family: 'Playfair Display', serif;
+    font-size: 100px;
     font-weight: bold;
-    margin-bottom: 20px;
+    text-shadow: 0 4px 10px rgba(255, 202, 40, 0.8); /* Increased opacity */
+    background: linear-gradient(to bottom, #ffeb3b, #ffca28);
+    -webkit-background-clip: text;
+    color: #ffca28; /* Gold for contrast */
+    display: inline-block;
+}
+
+
+.main-timer:hover {
+    transform: scale(1.05);
+}
+
+/* St. Louis Themed Timer Styling */
+.stl-timer-frame {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #f8d568; /* Gold color inspired by St. Louis' architecture */
+    background: #1c3b6b; /* Deep blue like the Mississippi River & STL skyline */
+    border: 4px solid #b2996e; /* Elegant metallic-gold border */
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .timer-controls {
     margin-bottom: 20px;
 }
 
+/* Timer Controls */
 .timer-controls button {
-    font-size: 20px;
-    padding: 10px;
+    font-size: 1rem;
+    padding: 10px 15px;
     margin: 5px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+#start-btn {
+    background: #2d7dd2;
+    color: white;
+}
+
+#stop-btn {
+    background: #b22222;
+    color: white;
+}
+
+.timer-controls button:hover {
+    background: linear-gradient(to right, #ffeb3b, #ffca28);
+    box-shadow: 0 6px 15px rgba(255, 202, 40, 0.5);
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Quick Timers Section */
+.curated-timers {
+    margin-top: 10px;
+}
+
+.curated-timers p {
+    font-weight: bold;
+    color: #f8d568;
+}
+
+.curated-timers button {
+    background: #444;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 3px;
+    border-radius: 5px;
+    transition: background 0.2s ease-in-out;
+}
+
+.curated-timers button:hover {
+    background: #666;
+}
+
+/* Past Timers */
+#past-timers {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+#past-timers li {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 3px 0;
 }
 
 .timer-duration-selection {
@@ -134,4 +226,14 @@ ul {
 
 ul li {
     margin: 10px 0;
+}
+
+/* Footer - Elegant Gold Trim */
+footer {
+    background: linear-gradient(to right, #1a1a2e, #16213e);
+    padding: 1rem;
+    color: #ffca28;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
