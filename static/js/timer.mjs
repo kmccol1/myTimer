@@ -17,13 +17,8 @@ const startBtn = document.getElementById("start-btn");
 const stopBtn = document.getElementById("stop-btn");
 const timerDisplay = document.getElementById("current-timer");
 
-//let startBtn, stopBtn, timerDisplay;
-
-//document.addEventListener("DOMContentLoaded", () => {
-//    startBtn = document.getElementById("start-btn");
-//    stopBtn = document.getElementById("stop-btn");
-//    timerDisplay = document.getElementById("current-timer");
-//});
+startBtn.addEventListener("click", startTimer);
+stopBtn.addEventListener("click", stopTimer);
 
 function startTimer()
 {
@@ -183,6 +178,13 @@ function formatTime(milliseconds)
 
     return `${formattedHours}${formattedMinutes}${formattedSeconds}`.trim();
 }
+
+document.querySelectorAll(".curated-timers button").forEach(button => {
+    button.addEventListener("click", () => {
+        const seconds = parseInt(button.textContent) * 60 || parseInt(button.getAttribute("data-seconds"));
+        setTimer(seconds);
+    });
+});
 
 // Use ES Modules export syntax:
 export { startTimer, stopTimer, setTimer, updateTime, formatTime, updatePastTimersDisplay, savePastTimer };
